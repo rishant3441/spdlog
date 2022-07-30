@@ -10,7 +10,7 @@
 namespace spdlog {
 namespace details {
 
-SPDLOG_INLINE log_msg_buffer::log_msg_buffer(const log_msg &orig_msg)
+inline log_msg_buffer::log_msg_buffer(const log_msg &orig_msg)
     : log_msg{orig_msg}
 {
     buffer.append(logger_name.begin(), logger_name.end());
@@ -18,7 +18,7 @@ SPDLOG_INLINE log_msg_buffer::log_msg_buffer(const log_msg &orig_msg)
     update_string_views();
 }
 
-SPDLOG_INLINE log_msg_buffer::log_msg_buffer(const log_msg_buffer &other)
+inline log_msg_buffer::log_msg_buffer(const log_msg_buffer &other)
     : log_msg{other}
 {
     buffer.append(logger_name.begin(), logger_name.end());
@@ -26,12 +26,12 @@ SPDLOG_INLINE log_msg_buffer::log_msg_buffer(const log_msg_buffer &other)
     update_string_views();
 }
 
-SPDLOG_INLINE log_msg_buffer::log_msg_buffer(log_msg_buffer &&other) SPDLOG_NOEXCEPT : log_msg{other}, buffer{std::move(other.buffer)}
+inline log_msg_buffer::log_msg_buffer(log_msg_buffer &&other) SPDLOG_NOEXCEPT : log_msg{other}, buffer{std::move(other.buffer)}
 {
     update_string_views();
 }
 
-SPDLOG_INLINE log_msg_buffer &log_msg_buffer::operator=(const log_msg_buffer &other)
+inline log_msg_buffer &log_msg_buffer::operator=(const log_msg_buffer &other)
 {
     log_msg::operator=(other);
     buffer.clear();
@@ -40,7 +40,7 @@ SPDLOG_INLINE log_msg_buffer &log_msg_buffer::operator=(const log_msg_buffer &ot
     return *this;
 }
 
-SPDLOG_INLINE log_msg_buffer &log_msg_buffer::operator=(log_msg_buffer &&other) SPDLOG_NOEXCEPT
+inline log_msg_buffer &log_msg_buffer::operator=(log_msg_buffer &&other) SPDLOG_NOEXCEPT
 {
     log_msg::operator=(other);
     buffer = std::move(other.buffer);
@@ -48,7 +48,7 @@ SPDLOG_INLINE log_msg_buffer &log_msg_buffer::operator=(log_msg_buffer &&other) 
     return *this;
 }
 
-SPDLOG_INLINE void log_msg_buffer::update_string_views()
+inline void log_msg_buffer::update_string_views()
 {
     logger_name = string_view_t{buffer.data(), logger_name.size()};
     payload = string_view_t{buffer.data() + logger_name.size(), payload.size()};

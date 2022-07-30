@@ -16,7 +16,7 @@
 namespace spdlog {
 
 // public methods
-SPDLOG_INLINE logger::logger(const logger &other)
+inline logger::logger(const logger &other)
     : name_(other.name_)
     , sinks_(other.sinks_)
     , level_(other.level_.load(std::memory_order_relaxed))
@@ -25,7 +25,7 @@ SPDLOG_INLINE logger::logger(const logger &other)
     , tracer_(other.tracer_)
 {}
 
-SPDLOG_INLINE logger::logger(logger &&other) SPDLOG_NOEXCEPT : name_(std::move(other.name_)),
+inline logger::logger(logger &&other) SPDLOG_NOEXCEPT : name_(std::move(other.name_)),
                                                                sinks_(std::move(other.sinks_)),
                                                                level_(other.level_.load(std::memory_order_relaxed)),
                                                                flush_level_(other.flush_level_.load(std::memory_order_relaxed)),
@@ -34,13 +34,13 @@ SPDLOG_INLINE logger::logger(logger &&other) SPDLOG_NOEXCEPT : name_(std::move(o
 
 {}
 
-SPDLOG_INLINE logger &logger::operator=(logger other) SPDLOG_NOEXCEPT
+inline logger &logger::operator=(logger other) SPDLOG_NOEXCEPT
 {
     this->swap(other);
     return *this;
 }
 
-SPDLOG_INLINE void logger::swap(spdlog::logger &other) SPDLOG_NOEXCEPT
+inline void logger::swap(spdlog::logger &other) SPDLOG_NOEXCEPT
 {
     name_.swap(other.name_);
     sinks_.swap(other.sinks_);
@@ -74,7 +74,7 @@ SPDLOG_INLINE level::level_enum logger::level() const
     return static_cast<level::level_enum>(level_.load(std::memory_order_relaxed));
 }
 
-SPDLOG_INLINE const std::string &logger::name() const
+inline const std::string &logger::name() const
 {
     return name_;
 }
@@ -155,7 +155,7 @@ SPDLOG_INLINE void logger::set_error_handler(err_handler handler)
 }
 
 // create new logger with same sinks and configuration.
-SPDLOG_INLINE std::shared_ptr<logger> logger::clone(std::string logger_name)
+inline std::shared_ptr<logger> logger::clone(std::string logger_name)
 {
     auto cloned = std::make_shared<logger>(*this);
     cloned->name_ = std::move(logger_name);
@@ -163,7 +163,7 @@ SPDLOG_INLINE std::shared_ptr<logger> logger::clone(std::string logger_name)
 }
 
 // protected methods
-SPDLOG_INLINE void logger::log_it_(const spdlog::details::log_msg &log_msg, bool log_enabled, bool traceback_enabled)
+inline void logger::log_it_(const spdlog::details::log_msg &log_msg, bool log_enabled, bool traceback_enabled)
 {
     if (log_enabled)
     {
@@ -175,7 +175,7 @@ SPDLOG_INLINE void logger::log_it_(const spdlog::details::log_msg &log_msg, bool
     }
 }
 
-SPDLOG_INLINE void logger::sink_it_(const details::log_msg &msg)
+inline void logger::sink_it_(const details::log_msg &msg)
 {
     for (auto &sink : sinks_)
     {
@@ -195,7 +195,7 @@ SPDLOG_INLINE void logger::sink_it_(const details::log_msg &msg)
     }
 }
 
-SPDLOG_INLINE void logger::flush_()
+inline void logger::flush_()
 {
     for (auto &sink : sinks_)
     {
@@ -218,13 +218,13 @@ SPDLOG_INLINE void logger::dump_backtrace_()
     }
 }
 
-SPDLOG_INLINE bool logger::should_flush_(const details::log_msg &msg)
+inline bool logger::should_flush_(const details::log_msg &msg)
 {
     auto flush_level = flush_level_.load(std::memory_order_relaxed);
     return (msg.level >= flush_level) && (msg.level != level::off);
 }
 
-SPDLOG_INLINE void logger::err_handler_(const std::string &msg)
+inline void logger::err_handler_(const std::string &msg)
 {
     if (custom_err_handler_)
     {

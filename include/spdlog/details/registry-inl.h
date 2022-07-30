@@ -30,7 +30,7 @@
 namespace spdlog {
 namespace details {
 
-SPDLOG_INLINE registry::registry()
+inline registry::registry()
     : formatter_(new pattern_formatter())
 {
 
@@ -49,7 +49,7 @@ SPDLOG_INLINE registry::registry()
 #endif // SPDLOG_DISABLE_DEFAULT_LOGGER
 }
 
-SPDLOG_INLINE registry::~registry() = default;
+inline registry::~registry() = default;
 
 SPDLOG_INLINE void registry::register_logger(std::shared_ptr<logger> new_logger)
 {
@@ -102,14 +102,14 @@ SPDLOG_INLINE std::shared_ptr<logger> registry::default_logger()
 // To be used directly by the spdlog default api (e.g. spdlog::info)
 // This make the default API faster, but cannot be used concurrently with set_default_logger().
 // e.g do not call set_default_logger() from one thread while calling spdlog::info() from another.
-SPDLOG_INLINE logger *registry::get_default_raw()
+inline logger *registry::get_default_raw()
 {
     return default_logger_.get();
 }
 
 // set default logger.
 // default logger is stored in default_logger_ (for faster retrieval) and in the loggers_ map.
-SPDLOG_INLINE void registry::set_default_logger(std::shared_ptr<logger> new_default_logger)
+inline void registry::set_default_logger(std::shared_ptr<logger> new_default_logger)
 {
     std::lock_guard<std::mutex> lock(logger_map_mutex_);
     // remove previous default logger from the map
@@ -288,7 +288,7 @@ SPDLOG_INLINE void registry::set_levels(log_levels levels, level::level_enum *gl
     }
 }
 
-SPDLOG_INLINE registry &registry::instance()
+inline registry &registry::instance()
 {
     static registry s_instance;
     return s_instance;

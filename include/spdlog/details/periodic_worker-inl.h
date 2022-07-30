@@ -32,7 +32,7 @@ SPDLOG_INLINE periodic_worker::periodic_worker(const std::function<void()> &call
 }
 
 // stop the worker thread and join it
-SPDLOG_INLINE periodic_worker::~periodic_worker()
+inline periodic_worker::~periodic_worker()
 {
     if (worker_thread_.joinable())
     {

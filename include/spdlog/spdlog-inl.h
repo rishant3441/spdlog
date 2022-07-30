@@ -52,12 +52,12 @@ SPDLOG_INLINE level::level_enum get_level()
     return default_logger_raw()->level();
 }
 
-SPDLOG_INLINE bool should_log(level::level_enum log_level)
+inline bool should_log(level::level_enum log_level)
 {
     return default_logger_raw()->should_log(log_level);
 }
 
-SPDLOG_INLINE void set_level(level::level_enum log_level)
+inline void set_level(level::level_enum log_level)
 {
     details::registry::instance().set_level(log_level);
 }
@@ -112,7 +112,7 @@ SPDLOG_INLINE std::shared_ptr<spdlog::logger> default_logger()
     return details::registry::instance().default_logger();
 }
 
-SPDLOG_INLINE spdlog::logger *default_logger_raw()
+inline spdlog::logger *default_logger_raw()
 {
     return details::registry::instance().get_default_raw();
 }
