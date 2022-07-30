@@ -545,7 +545,7 @@ template <> struct is_char<char> : std::true_type {};
 
 // Returns a string view of `s`.
 template <typename Char, FMT_ENABLE_IF(is_char<Char>::value)>
-FMT_INLINE auto to_string_view(const Char* s) -> basic_string_view<Char> {
+inline auto to_string_view(const Char* s) -> basic_string_view<Char> {
   return s;
 }
 template <typename Char, typename Traits, typename Alloc>
@@ -580,7 +580,7 @@ constexpr auto to_string_view(const S& s)
 
 FMT_BEGIN_DETAIL_NAMESPACE
 
-void to_string_view(...);
+inline void to_string_view(...);
 using fmt::to_string_view;
 
 // Specifies whether S is a string type convertible to fmt::basic_string_view.

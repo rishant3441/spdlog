@@ -9,7 +9,7 @@
 
 #include <spdlog/common.h>
 
-SPDLOG_INLINE bool spdlog::sinks::sink::should_log(spdlog::level::level_enum msg_level) const
+inline bool spdlog::sinks::sink::should_log(spdlog::level::level_enum msg_level) const
 {
     return msg_level >= level_.load(std::memory_order_relaxed);
 }

@@ -8,21 +8,21 @@
 #endif
 namespace spdlog {
 namespace details {
-SPDLOG_INLINE backtracer::backtracer(const backtracer &other)
+inline backtracer::backtracer(const backtracer &other)
 {
     std::lock_guard<std::mutex> lock(other.mutex_);
     enabled_ = other.enabled();
     messages_ = other.messages_;
 }
 
-SPDLOG_INLINE backtracer::backtracer(backtracer &&other) SPDLOG_NOEXCEPT
+inline backtracer::backtracer(backtracer &&other) SPDLOG_NOEXCEPT
 {
     std::lock_guard<std::mutex> lock(other.mutex_);
     enabled_ = other.enabled();
     messages_ = std::move(other.messages_);
 }
 
-SPDLOG_INLINE backtracer &backtracer::operator=(backtracer other)
+inline backtracer &backtracer::operator=(backtracer other)
 {
     std::lock_guard<std::mutex> lock(mutex_);
     enabled_ = other.enabled();
@@ -30,25 +30,25 @@ SPDLOG_INLINE backtracer &backtracer::operator=(backtracer other)
     return *this;
 }
 
-SPDLOG_INLINE void backtracer::enable(size_t size)
+inline void backtracer::enable(size_t size)
 {
     std::lock_guard<std::mutex> lock{mutex_};
     enabled_.store(true, std::memory_order_relaxed);
     messages_ = circular_q<log_msg_buffer>{size};
 }
 
-SPDLOG_INLINE void backtracer::disable()
+inline void backtracer::disable()
 {
     std::lock_guard<std::mutex> lock{mutex_};
     enabled_.store(false, std::memory_order_relaxed);
 }
 
-SPDLOG_INLINE bool backtracer::enabled() const
+inline bool backtracer::enabled() const
 {
     return enabled_.load(std::memory_order_relaxed);
 }
 
-SPDLOG_INLINE void backtracer::push_back(const log_msg &msg)
+inline void backtracer::push_back(const log_msg &msg)
 {
     std::lock_guard<std::mutex> lock{mutex_};
     messages_.push_back(log_msg_buffer{msg});

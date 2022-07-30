@@ -68,7 +68,7 @@ namespace spdlog {
 namespace details {
 namespace os {
 
-SPDLOG_INLINE spdlog::log_clock::time_point now() SPDLOG_NOEXCEPT
+inline spdlog::log_clock::time_point now() SPDLOG_NOEXCEPT
 {
 
 #if defined __linux__ && defined SPDLOG_CLOCK_COARSE
@@ -81,7 +81,7 @@ SPDLOG_INLINE spdlog::log_clock::time_point now() SPDLOG_NOEXCEPT
     return log_clock::now();
 #endif
 }
-SPDLOG_INLINE std::tm localtime(const std::time_t &time_tt) SPDLOG_NOEXCEPT
+inline std::tm localtime(const std::time_t &time_tt) SPDLOG_NOEXCEPT
 {
 
 #ifdef _WIN32
@@ -94,13 +94,13 @@ SPDLOG_INLINE std::tm localtime(const std::time_t &time_tt) SPDLOG_NOEXCEPT
     return tm;
 }
 
-SPDLOG_INLINE std::tm localtime() SPDLOG_NOEXCEPT
+inline std::tm localtime() SPDLOG_NOEXCEPT
 {
     std::time_t now_t = ::time(nullptr);
     return localtime(now_t);
 }
 
-SPDLOG_INLINE std::tm gmtime(const std::time_t &time_tt) SPDLOG_NOEXCEPT
+inline std::tm gmtime(const std::time_t &time_tt) SPDLOG_NOEXCEPT
 {
 
 #ifdef _WIN32
@@ -260,7 +260,7 @@ SPDLOG_INLINE size_t filesize(FILE *f)
 #endif
 
 // Return utc offset in minutes or throw spdlog_ex on failure
-SPDLOG_INLINE int utc_minutes_offset(const std::tm &tm)
+inline int utc_minutes_offset(const std::tm &tm)
 {
 
 #ifdef _WIN32
@@ -327,7 +327,7 @@ SPDLOG_INLINE int utc_minutes_offset(const std::tm &tm)
 // Return current thread id as size_t
 // It exists because the std::this_thread::get_id() is much slower(especially
 // under VS 2013)
-SPDLOG_INLINE size_t _thread_id() SPDLOG_NOEXCEPT
+inline size_t _thread_id() SPDLOG_NOEXCEPT
 {
 #ifdef _WIN32
     return static_cast<size_t>(::GetCurrentThreadId());
@@ -361,7 +361,7 @@ SPDLOG_INLINE size_t _thread_id() SPDLOG_NOEXCEPT
 }
 
 // Return current thread id as size_t (from thread local storage)
-SPDLOG_INLINE size_t thread_id() SPDLOG_NOEXCEPT
+inline size_t thread_id() SPDLOG_NOEXCEPT
 {
 #if defined(SPDLOG_NO_TLS)
     return _thread_id();
@@ -397,7 +397,7 @@ SPDLOG_INLINE std::string filename_to_str(const filename_t &filename)
 }
 #endif
 
-SPDLOG_INLINE int pid() SPDLOG_NOEXCEPT
+inline int pid() SPDLOG_NOEXCEPT
 {
 
 #ifdef _WIN32
